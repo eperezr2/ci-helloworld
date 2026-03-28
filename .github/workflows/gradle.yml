@@ -1,20 +1,10 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Java CI/CD with Gradle
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
-
-  # permissions:
-  # contents: read
+    branches: [ "main" ]
 
 jobs:
   build_and_test:
@@ -44,7 +34,11 @@ jobs:
         uses: cicirello/jacoco-badge-generator@v2.9.0
         with:
           jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
-          fail-if-branches-less-than: 100
+          fail-if-coverage-less-than: 0
+          fail-if-branches-less-than: 0
+          fail-on-coverage-decrease: true
+          fail-on-branches-decrease: true
+          generate-badges: false
 
   build_and_publish_docker_image:
     name: Publish to Docker Hub
